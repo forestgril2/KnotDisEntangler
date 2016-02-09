@@ -1,0 +1,4 @@
+[Project]
+Name=KnotDisentangler2
+Manager=KDevCMakeManager
+VersionControl=kdevgit
