@@ -5,6 +5,8 @@
 #include "Histogram.h"
 #endif
 
+#include "funkcjezew.h"
+
 //-------------------------------------------------------------------------------
 template<class TYP>
 Histogram<TYP>::Histogram()
@@ -70,7 +72,7 @@ Histogram<TYP>::Histogram(TYP* wskNowejTablicyDanych,//konstruktor nie dba o pop
          for(long int i=IloscDanych; i>0; i++) wskTablicyPrzedzialow[static_cast<int>((*(wskSkoczek++)-DanaMin)/SzerokoscPrzedz)]++;
 	}
    }
-  IloscDanychPrzedzMax=ZnajdzMax(wskTablicyPrzedzialow,IloscPrzedz);
+  IloscDanychPrzedzMax=ZnajdzMax(wskTablicyPrzedzialow, IloscPrzedz);
 }
 //---------------------------------------------------------------------------------------------------------------
 template<class TYP>
@@ -209,6 +211,9 @@ void Histogram<TYP>::WczytajBinStr(ifstream* wskstrPliku)
  for (int i=0;i<IloscPrzedz;i++) wskstrPliku->read((char*)(&wskTablicyPrzedzialow[i]),sizeof(IloscPrzedz));
 
 }
+
+template class Histogram<int>;
+template class Histogram<double>;
 //---------------------------------------------------------------------------------------------------------
 #endif
 

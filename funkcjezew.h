@@ -97,6 +97,11 @@ inline double StosunekGestosciStanowBoltzmanna(double EnergiaNowa,double Energia
 }
 //--------------------------------------------------------------------------------
 double CoulombKnotEnergy(Knot3D *Knot);
+double CloseAttractiveKnotEnergy(Knot3D* wskKnot);
+double CloseRepulsiveKnotEnergy(Knot3D* wskKnot);
+double DistantRepulsiveKnotEnergy(Knot3D* wskKnot);
+double DistantAttractiveKnotEnergy(Knot3D* wskKnot);
+
 //--------------------------------------------------------------------------------
 template <class TYP>
 TYP Srednia(TYP* wskTablicy, int Ilosc)

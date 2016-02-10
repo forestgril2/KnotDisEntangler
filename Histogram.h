@@ -1,10 +1,15 @@
 #ifndef HISTOGRAM_H
 #define HISTOGRAM_H
 
+#include <iostream>
+#include <fstream>
+
 //klasa histogram przechowuje i zarzadza histogramem typu TYP
 #ifndef DOMYSLNA_ILOSC_PRZEDZIALOW_HISTOGRAMU
 #define DOMYSLNA_ILOSC_PRZEDZIALOW_HISTOGRAMU 100
 #endif
+
+using namespace std;
 
 enum KierunekLiczenia {OdPoczTablicy,OdKoncaTablicy};
 

@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
  long int NumerWczytywany=0;
  double ParametrDouble=0;
 
- for(;nrParametruFunkcjiMain<argc;)
+ for(; nrParametruFunkcjiMain < argc;)
     {
      if(//(argv[nrParametruFunkcjiMain])[0]=='/'||   //czy jest znak parametru '-' lub '/' ?
         (argv[nrParametruFunkcjiMain])[0]=='-') 
@@ -177,18 +177,18 @@ int main(int argc, char *argv[])
  
  if(TrybTekstowyOdczytu) 
    {
-    W.WczytajTxt(wskNazwyDomyslna,NumerWczytywany);
+    W.WczytajTxt(wskNazwyDomyslna, NumerWczytywany);
    }
  else
   {
-   W.WczytajBin(wskNazwyDomyslna,NumerWczytywany);
+   W.WczytajBin(wskNazwyDomyslna, NumerWczytywany);
   };
 
  //zapiszmy poczatkowy stan wezla
  Poczatkowy=W;
 
  cout<<"---------------------------------------"<<endl;
- cout<<"Informacje o wezle numer \t"<<NumerWczytywany<<"\tz pliku \t"<<wskNazwyDomyslna<<endl;
+ cout<<"Informacje o wezle numer \t"<< NumerWczytywany <<"\tz pliku \t"<<wskNazwyDomyslna<<endl;
  cout<<endl;
  W.WyznaczWszystko();
  W.WypiszInfo();

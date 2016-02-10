@@ -5,7 +5,8 @@
 #include "KnotSimData.h"
 #endif
 
-//include "funkcjezew.h"
+#include "funkcjezew.h"
+
 //------------------------------------------------------------------------------------
 bool KnotSimData::GenerujZTablicyGiec(GiecieWezla* wskGiec,
         long int iloscgiec,long int iloscudanych,

@@ -39,8 +39,8 @@ class CORECT
 
  private:
   int Si,
-      *TablicaNumerowSegmentowA,
-      *TablicaNumerowSegmentowB,IloscSegm;
+      *TablicaNumerowElementowA,
+      *TablicaNumerowElementowB,IloscSegm;
 
   double DlugoscWezla,
          SredniaDlugosc,
@@ -50,7 +50,7 @@ class CORECT
          DlugoscTrwania,
          ParametrZaciskania;
          
-  WK3D *TablicaSegmentow,*Wezel;
+  WK3D *TablicaElementow,*Wezel;
 
   int RezSt(double Nd, int **ta, int **tb);
   void Odswiez( double);
