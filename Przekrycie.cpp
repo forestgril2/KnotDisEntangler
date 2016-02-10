@@ -9,8 +9,8 @@
 
 std::ostream& operator<<(std::ostream& L, Przekrycie& R)
 {
- L<<"["<<R.A<<","<<R.B<<"]";
- return L;
+  L << "[" << R.A << "," << R.B << "]";
+  return L;
 }
 
 #endif

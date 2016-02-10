@@ -54,6 +54,3 @@ using namespace std;
 #include "KnotSimulator.h"
 #endif
 
-
-
-

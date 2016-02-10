@@ -3,13 +3,13 @@
 
 #include <QtGui/QMainWindow>
 
-class KnotDisentangler2 : public QMainWindow
+class KnotDisentangler2: public QMainWindow
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    KnotDisentangler2();
-    virtual ~KnotDisentangler2();
+  KnotDisentangler2();
+  virtual ~KnotDisentangler2();
 };
 
 #endif // KnotDisentangler2_H
