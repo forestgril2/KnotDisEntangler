@@ -4,16 +4,17 @@
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QAction>
+#include <QSurface>
 
 KnotDisentangler2::KnotDisentangler2()
 {
-  QLabel* label = new QLabel(this);
-  label->setText("Hello World!");
-  setCentralWidget(label);
   QAction* action = new QAction(this);
   action->setText("Quit");
+  
   connect(action, SIGNAL(triggered()), SLOT(close()));
   menuBar()->addMenu("File")->addAction(action);
+  
+  setWindowSurface(OpenGLSurface);
 }
 
 KnotDisentangler2::~KnotDisentangler2()

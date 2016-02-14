@@ -32,8 +32,8 @@ KnotSimulator SymulatorGlowny(wskNazwyDomyslna, wskNazwyWynikAuto,
 KnotSimulator& S = SymulatorGlowny;
 Knot3D& W = SymulatorGlowny.Symulowany;
 
-static int slices = 10;
-static int stacks = 6;
+static int slices = 20;
+static int stacks = 12;
 
 double x = 0, y = 0;
 
@@ -51,9 +51,13 @@ struct Kolor
   bool Giecia2;
 };
 
-//macierze OpenGL obrotow
+//OpenGL rotations
 static Macierz4D MacierzPomocnicza;
 static GLdouble ObrotyGL[] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+enum Axis3D
+{
+  OX, OY, OZ
+};
 /* GLUT callback Handlers */
 //-------------------------------------------------
 static void resize(int width, int height)
@@ -142,32 +146,69 @@ static void display(void)
   glutSwapBuffers();
 }
 
+void setGLUTsphereInitialParams()
+{
+  slices = 10;
+  stacks = 6;
+}
+
+void changeMultiplyKnotThickness(Knot3D& K, double multiplier)
+{
+  K.UstawPromienPrzekroju(K.PromienPrzekroju * multiplier);
+  K.WyznaczWszystko();
+}
+
+void translateKnotOX(Knot3D& K, double dx)
+{
+  K.Przesun(Wektor3D(dx, 0, 0));
+}
+
+void multiplyKnotSegmentsNumber(Knot3D& K, KnotSimulator& S, double m)
+{
+  K.UstawIloscSegm(int(K.IloscSegm * m));
+  S.UstawParametry();
+}
+
+void returnGLtoHomeView()
+{
+  MacierzPomocnicza.identity();
+  for (int i = 0; i < 16; i++)
+    ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
+}
+
+void rotateGLviewAroundAxis(Axis3D axis, double angle)
+{
+  MacierzPomocnicza = Macierz4D(ObrotyGL);
+  MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(
+      angle * (axis == OX), angle * (axis == OY), angle * (axis == OZ))
+      * MacierzPomocnicza;
+  for (int i = 0; i < 16; i++)
+    ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
+}
+
 static void key(unsigned char key, int x, int y)
 {
   switch (key)
   {
 
     case '%':
-      slices = 10;
-      stacks = 6;
+      setGLUTsphereInitialParams();
       break;
 
     case '7':
-      W.UstawPromienPrzekroju(W.PromienPrzekroju * (1.0 / 1.05));
-      W.WyznaczWszystko();
+      changeMultiplyKnotThickness(W, 1. / 1.05);
       break;
 
     case '8':
-      W.UstawPromienPrzekroju(W.PromienPrzekroju * (1.05));
-      W.WyznaczWszystko();
+      changeMultiplyKnotThickness(W, 1.05);
       break;
 
     case '5':
-      W.Przesun(Wektor3D(-0.03 * S.PromienMaksObiektu, 0, 0));
+      translateKnotOX(W, -0.03 * S.PromienMaksObiektu);
       break;
 
     case '6':
-      W.Przesun(Wektor3D(0.03 * S.PromienMaksObiektu, 0, 0));
+      translateKnotOX(W, 0.03 * S.PromienMaksObiektu);
       break;
 
     case '!':
@@ -190,23 +231,19 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case '3':
-      W.UstawIloscSegm(int(W.IloscSegm * (1.0 / 1.0333)));
-      S.UstawParametry();
+      multiplyKnotSegmentsNumber(W, S, 1. / 1.0333);
       break;
 
     case '4':
-      W.UstawIloscSegm(int(W.IloscSegm * (1.0333)));
-      S.UstawParametry();
+      multiplyKnotSegmentsNumber(W, S, 1.0333);
       break;
 
     case '#':
-      W.UstawIloscSegm(int(W.IloscSegm * (1.0 / 1.111)));
-      S.UstawParametry();
+      multiplyKnotSegmentsNumber(W, S, 1. / 1.111);
       break;
 
     case '$':
-      W.UstawIloscSegm(int(W.IloscSegm * (1.111)));
-      S.UstawParametry();
+      multiplyKnotSegmentsNumber(W, S, 1.111);
       break;
 
     case 27: //escape
@@ -214,9 +251,7 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case 'h':
-      MacierzPomocnicza.identity();
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
+      returnGLtoHomeView();
       break;
 
     case 'G':
@@ -252,111 +287,51 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case 'q':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0, 0,
-          -0.017453292519943295 / 2.0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajZ(-0.017453292519943295/2.0);  Pomoc=W;
+      rotateGLviewAroundAxis(OZ, -0.017453292519943295 / 2.0);
       break;
 
     case 'e':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0, 0,
-          0.017453292519943295 / 2.0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajZ(0.017453292519943295/2.0);  Pomoc=W;
+      rotateGLviewAroundAxis(OZ, 0.017453292519943295 / 2.0);
       break;
 
     case 'w':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(
-          0.017453292519943295 / 2.0, 0, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajX(0.017453292519943295/2.0);  Pomoc=W;
+      rotateGLviewAroundAxis(OX, 0.017453292519943295 / 2.0);
       break;
 
     case 's':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(
-          -0.017453292519943295 / 2.0, 0, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajX(-0.017453292519943295/2.0); Pomoc=W;
+      rotateGLviewAroundAxis(OX, -0.017453292519943295 / 2.0);
       break;
 
     case 'a':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0,
-          0.017453292519943295 / 2.0, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajY(0.017453292519943295/2.0);   Pomoc=W;
+      rotateGLviewAroundAxis(OY, 0.017453292519943295 / 2.0);
       break;
 
     case 'd':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0,
-          -0.017453292519943295 / 2.0, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajY(-0.017453292519943295/2.0);  Pomoc=W;
+      rotateGLviewAroundAxis(OY, -0.017453292519943295 / 2.0);
       break;
 
     case 'Q':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0, 0,
-          -3 * 0.052359877559829885) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajZ(-3*0.052359877559829885);  Pomoc=W;
+      rotateGLviewAroundAxis(OZ, -3 * 0.052359877559829885);
       break;
 
     case 'E':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0, 0,
-          3 * 0.052359877559829885) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajZ(3*0.052359877559829885);   Pomoc=W;
+      rotateGLviewAroundAxis(OZ, 3 * 0.052359877559829885);
       break;
 
     case 'W':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(
-          3 * 0.052359877559829885, 0, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajX(3*0.052359877559829885);   Pomoc=W;
+      rotateGLviewAroundAxis(OX, 3 * 0.052359877559829885);
       break;
 
     case 'S':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(
-          -3 * 0.052359877559829885, 0, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajX(-3*0.052359877559829885);  Pomoc=W;
+      rotateGLviewAroundAxis(OX, -3 * 0.052359877559829885);
       break;
 
     case 'A':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0,
-          3 * 0.052359877559829885, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajY(3*0.052359877559829885);   Pomoc=W;
+      rotateGLviewAroundAxis(OY, 3 * 0.052359877559829885);
       break;
 
     case 'D':
-      MacierzPomocnicza = Macierz4D(ObrotyGL);
-      MacierzPomocnicza = MacierzPomocnicza.createRotationAroundAxis(0,
-          -3 * 0.052359877559829885, 0) * MacierzPomocnicza;
-      for (int i = 0; i < 16; i++)
-        ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
-      //W.ObracajY(-3*0.052359877559829885);    Pomoc=W;
+      rotateGLviewAroundAxis(OY, -3 * 0.052359877559829885);
       break;
 
     case '|':
@@ -795,7 +770,7 @@ int main(int argc, char *argv[])
 
   W = S.WskazKnotSymulowany();
   SymulatorGlowny.WczytajPlik(wskNazwyWynikAuto);
-  SymulatorGlowny.WczytajKnot(ostatni);
+  //SymulatorGlowny.WczytajKnot(ostatni);
   SymulatorGlowny.UstawParametry();
   SymulatorGlowny.InfoKonsolowe();
 

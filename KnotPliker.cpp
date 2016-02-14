@@ -63,6 +63,7 @@ int KnotPliker::WczytajPlik(char* nazwa)
     wskstrPW->seekg(sizeof(Wektor3D) * Segm, ios_base::cur);
     wskstrPW->read((char*) &Giecia, sizeof(Giecia));
     wskstrPW->seekg(sizeof(GiecieWezla) * Giecia, ios_base::cur);
+
     DaneWezlow.insert(DaneWezlow.end(), DaneWezlaPliku(Pozycja, Segm, Giecia));
   };
 
@@ -76,7 +77,8 @@ void KnotPliker::WczytajKnot(Knot3D* wskWezla, long int Numer)
   {
     Numer = AktualnyKnot = 0;
     WczytajKnot(wskWezla, AktualnyKnot);
-  };
+  }
+
   if (Numer >= IloscWezlow)
   {
     Numer = AktualnyKnot = IloscWezlow - 1;
@@ -95,9 +97,11 @@ void KnotPliker::WczytajKnot(Knot3D* wskWezla, long int Numer)
       wskWezla->IloscSegm = StaraIloscSegm;
       return;
     }
+    
     delete[] wskWezla->wskTablicySegm;
     wskWezla->wskTablicySegm = new Wektor3D[wskWezla->IloscSegm];
     Wektor3D* wskPomoc = wskWezla->wskTablicySegm;
+    
     for (int i = 0; i < wskWezla->IloscSegm; i++)
     {
       wskstrPW->read((char*) wskPomoc, sizeof(Wektor3D));
