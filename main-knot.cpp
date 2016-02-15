@@ -195,6 +195,35 @@ void scaleKnot(double scale)
   S.Pomoc = W;
 }
 
+void knotBend(double angle)
+{
+  W.Zegnij(angle);
+  W.WyznaczWszystko();
+  W.Przesun(Wektor3D() - W.WyznaczSrodekMasy());
+  W.UsunMomentor(&S.Pomoc);
+  S.Pomoc = W;
+}
+
+void readKnotRelativeToCurrent(int pos)
+{
+  S.WczytajKnot(wybrany, S.PlikerWynikow.AktualnyKnot + pos);
+  S.Pomoc = W;
+  W.WyznaczWszystko();
+  delete[] S.wskTablicyPomocniczejWektorow;
+  S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
+  S.InfoKonsolowe();
+  cout << flush;
+}
+
+void readKnotRelativeToCurrentByPliker(int pos)
+{
+  S.PlikerWynikow.WczytajKnot(&W, S.PlikerWynikow.AktualnyKnot + pos);
+  S.Pomoc = W;
+  W.WyznaczWszystko();
+  delete[] S.wskTablicyPomocniczejWektorow;
+  S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
+}
+
 static void key(unsigned char key, int x, int y)
 {
   switch (key)
@@ -345,10 +374,7 @@ static void key(unsigned char key, int x, int y)
 
     case '|':
       W.SkalujMin();
-      W.WyznaczWszystko();
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
-      S.Pomoc = W;
+      scaleKnot(1.);
       break;
 
     case '"':
@@ -385,35 +411,19 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case ')':
-      W.Skaluj(1.001);
-      W.WyznaczWszystko();
-      S.Pomoc = W;
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
+      scaleKnot(1.001);
       break;
 
     case '(':
-      W.Skaluj(double(1.0) / double(1.001));
-      W.WyznaczWszystko();
-      S.Pomoc = W;
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
+      scaleKnot(1./1.001);
       break;
 
     case '0':
-      W.Skaluj(1.0001);
-      W.WyznaczWszystko();
-      S.Pomoc = W;
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
+      scaleKnot(1.0001)
       break;
 
     case '9':
-      W.Skaluj(double(1.0) / double(1.0001));
-      W.WyznaczWszystko();
-      S.Pomoc = W;
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
+      scaleKnot(1./1.0001)
       break;
 
     case '[':
@@ -434,37 +444,19 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case ',':
-      W.Zegnij(-2 * 0.0349065850398865915);
-      W.WyznaczWszystko();
-      W.Przesun(Wektor3D() - W.WyznaczSrodekMasy());
-      W.UsunMomentor(&S.Pomoc);
-      S.Pomoc = W;
+      knotBend(-2 * 0.0349065850398865915);
       break;
 
     case '.':
-      W.Zegnij(2 * 0.0349065850398865915);
-      W.WyznaczWszystko();
-      W.Przesun(Wektor3D() - W.WyznaczSrodekMasy());
-      W.UsunMomentor(&S.Pomoc);
-      S.Pomoc = W;
+      knotBend(2 * 0.0349065850398865915);
       break;
 
     case '<':
-      S.Pomoc = W;
-      W.Zegnij(-0.00872664625997164788);
-      W.WyznaczWszystko();
-      W.Przesun(Wektor3D() - W.WyznaczSrodekMasy());
-      W.UsunMomentor(&S.Pomoc);
-      S.Pomoc = W;
+      knotBend(-0.00872664625997164788);
       break;
 
     case '>':
-      S.Pomoc = W;
-      W.Zegnij(0.00872664625997164788);
-      W.WyznaczWszystko();
-      W.Przesun(Wektor3D() - W.WyznaczSrodekMasy());
-      W.UsunMomentor(&S.Pomoc);
-      S.Pomoc = W;
+      knotBend(0.00872664625997164788);
       break;
 
     case 'u':
@@ -520,23 +512,11 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case 'x':
-      S.WczytajKnot(wybrany, S.PlikerWynikow.AktualnyKnot - 1);
-      S.Pomoc = W;
-      W.WyznaczWszystko();
-      delete[] S.wskTablicyPomocniczejWektorow;
-      S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
-      S.InfoKonsolowe();
-      cout << flush;
+      readKnotRelativeToCurrent(-1);
       break;
 
     case 'c':
-      S.WczytajKnot(wybrany, S.PlikerWynikow.AktualnyKnot + 1);
-      S.Pomoc = W;
-      W.WyznaczWszystko();
-      delete[] S.wskTablicyPomocniczejWektorow;
-      S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
-      S.InfoKonsolowe();
-      cout << flush;
+      readKnotRelativeToCurrent(1);
       break;
 
     case 'X':
@@ -558,19 +538,11 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case 'v':
-      S.PlikerWynikow.WczytajKnot(&W, S.PlikerWynikow.AktualnyKnot - 10);
-      S.Pomoc = W;
-      W.WyznaczWszystko();
-      delete[] S.wskTablicyPomocniczejWektorow;
-      S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
+      readKnotRelativeToCurrentByPliker(-10);
       break;
 
     case 'b':
-      S.PlikerWynikow.WczytajKnot(&W, S.PlikerWynikow.AktualnyKnot + 10);
-      S.Pomoc = W;
-      W.WyznaczWszystko();
-      delete[] S.wskTablicyPomocniczejWektorow;
-      S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
+      readKnotRelativeToCurrentByPliker(10);
       break;
 
     case 'V':
@@ -593,19 +565,11 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case 'n':
-      S.PlikerWynikow.WczytajKnot(&W, S.PlikerWynikow.AktualnyKnot - 100);
-      S.Pomoc = W;
-      W.WyznaczWszystko();
-      delete[] S.wskTablicyPomocniczejWektorow;
-      S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
+      readKnotRelativeToCurrentByPliker(-100);
       break;
 
     case 'm':
-      S.PlikerWynikow.WczytajKnot(&W, S.PlikerWynikow.AktualnyKnot + 100);
-      S.Pomoc = W;
-      W.WyznaczWszystko();
-      delete[] S.wskTablicyPomocniczejWektorow;
-      S.wskTablicyPomocniczejWektorow = new Wektor3D[W.IloscSegm];
+      readKnotRelativeToCurrentByPliker(100);
       break;
 
     case 'N':
