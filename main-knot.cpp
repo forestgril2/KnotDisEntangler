@@ -419,11 +419,11 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case '0':
-      scaleKnot(1.0001)
+      scaleKnot(1.0001);
       break;
 
     case '9':
-      scaleKnot(1./1.0001)
+      scaleKnot(1./1.0001);
       break;
 
     case '[':
