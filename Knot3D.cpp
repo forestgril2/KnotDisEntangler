@@ -2248,7 +2248,7 @@ Knot3D& Knot3D::operator/=(double Dzielna)
  return *this;
 }
 //------------------------------------------------------------------------------
- void Knot3D::SkalujMin()
+void Knot3D::SkalujMin()
 {
   while (!SprawdzCzySaPrzekryciaPoGieciu()) {
      WyczyscPrzekrycia();

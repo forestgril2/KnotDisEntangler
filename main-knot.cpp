@@ -186,6 +186,15 @@ void rotateGLviewAroundAxis(Axis3D axis, double angle)
     ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
 }
 
+void scaleKnot(double scale)
+{
+  W.Skaluj(scale);
+  W.WyznaczWszystko();
+  S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
+      * W.DlugoscSegmSrednia;
+  S.Pomoc = W;
+}
+
 static void key(unsigned char key, int x, int y)
 {
   switch (key)
@@ -360,35 +369,19 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case '+':
-      W.Skaluj(1.1);
-      W.WyznaczWszystko();
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
-      S.Pomoc = W;
+      scaleKnot(1.1);
       break;
 
     case '_':
-      W.Skaluj(double(1.0) / double(1.1));
-      W.WyznaczWszystko();
-      S.Pomoc = W;
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
+      scaleKnot(1./1.1);
       break;
 
     case '=':
-      W.Skaluj(1.01);
-      W.WyznaczWszystko();
-      S.Pomoc = W;
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
+      scaleKnot(1.01);
       break;
 
     case '-':
-      W.Skaluj(double(1.0) / double(1.01));
-      W.WyznaczWszystko();
-      S.Pomoc = W;
-      S.DlugoscWezla = S.DlugoscWezlaPoczatkowa = W.IloscSegm
-          * W.DlugoscSegmSrednia;
+      scaleKnot(1./1.01);
       break;
 
     case ')':
