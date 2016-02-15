@@ -39,6 +39,10 @@
 #include <cstring>
 #include <iostream>
 #include <cassert>
+#include <limits>
+#include <cstddef>
+
+using namespace std;
 
 #ifdef VMATH_NAMESPACE
 namespace VMATH_NAMESPACE
@@ -1743,7 +1747,7 @@ public:
   {
     Matrix3<T> ret;
     T determinant = det();
-    if (determinant == 0.0) return ret * 1E+390;
+    if (determinant == 0.0) return ret * std::numeric_limits<double>::max();
     determinant = 1.0 / determinant;
     ret.at(0, 0) = (at(1, 1) * at(2, 2) - at(1, 2) * at(2, 1)) * determinant;
     ret.at(0, 1) = (at(0, 2) * at(2, 1) - at(0, 1) * at(2, 2)) * determinant;

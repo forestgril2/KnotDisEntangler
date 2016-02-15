@@ -186,7 +186,7 @@ void rotateGLviewAroundAxis(Axis3D axis, double angle)
     ObrotyGL[i] = MacierzPomocnicza.at(i / 4, i % 4);
 }
 
-void scaleKnot(double scale)
+void knotScale(double scale)
 {
   W.Skaluj(scale);
   W.WyznaczWszystko();
@@ -374,7 +374,7 @@ static void key(unsigned char key, int x, int y)
 
     case '|':
       W.SkalujMin();
-      scaleKnot(1.);
+      knotScale(1.);
       break;
 
     case '"':
@@ -395,35 +395,35 @@ static void key(unsigned char key, int x, int y)
       break;
 
     case '+':
-      scaleKnot(1.1);
+      knotScale(1.1);
       break;
 
     case '_':
-      scaleKnot(1./1.1);
+      knotScale(1./1.1);
       break;
 
     case '=':
-      scaleKnot(1.01);
+      knotScale(1.01);
       break;
 
     case '-':
-      scaleKnot(1./1.01);
+      knotScale(1./1.01);
       break;
 
     case ')':
-      scaleKnot(1.001);
+      knotScale(1.001);
       break;
 
     case '(':
-      scaleKnot(1./1.001);
+      knotScale(1./1.001);
       break;
 
     case '0':
-      scaleKnot(1.0001);
+      knotScale(1.0001);
       break;
 
     case '9':
-      scaleKnot(1./1.0001);
+      knotScale(1./1.0001);
       break;
 
     case '[':

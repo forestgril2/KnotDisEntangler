@@ -2,15 +2,11 @@
 #define KNOT3D_CPP
 
 #include <fstream>
+#include <limits>
+#include <cstddef>
 
-#ifndef KNOT3D_H
 #include "Knot3D.h"
-#endif
-
-#ifndef FUNKCJEZEW_H
 #include "funkcjezew.h"
-#endif
-
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------klasa     Knot3D      DEFINICJE FUNKCJI SKLADOWYCH --------------
@@ -935,7 +931,7 @@ int Knot3D::ZnajdzNajblSegm(int* const wskNr,
                                       //srodka masy
       {
        Kopia=SrodekMasy;
-       OdlegloscMin=1E+400;
+       OdlegloscMin = std::numeric_limits<double>::max();
        
        for(int i=0;i<*wskIle;i++)
           {

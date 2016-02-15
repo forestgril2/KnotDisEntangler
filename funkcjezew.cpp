@@ -9,6 +9,9 @@
 #include "Wektor3D.h"
 #endif
 
+#include <limits>
+#include <cstddef>
+
 //------------------------------------------------------------------------------
 double WyznaczPromienMax(const Wektor3D& Punkt,             //funkcja nie dba
     const Wektor3D* const wskTablicySegm, //czy nie dziala
@@ -53,7 +56,7 @@ double WyznaczPromienMin(const Wektor3D& Punkt,             //funkcja nie dba
   Wektor3D Punkt1 = Punkt, Pomoc;
   Wektor3D* wskPomoc;
 
-  double R, RMin2 = 1E4920;
+  double R, RMin2 = std::numeric_limits<double>::max();
   if (IloscSegm < 0)
   {
     wskPomoc = const_cast<Wektor3D*>(wskTablicySegm);
