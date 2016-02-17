@@ -7,6 +7,7 @@
 #include <set>
 #include <vector>
 #include <math.h>
+#include <QtGui/QApplication>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ using namespace std;
 #include "Histogram.h"
 #include "KnotSimData.h"
 #include "KnotSimulator.h"
+#include "KnotDisentangler2.h"
 
 //domyslne nazwy plikow:
 char wskNazwyDomyslna[256] = {"knot.knt"};
@@ -84,7 +86,7 @@ static void display(void)
   //const double t = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
   //const double a = t*90.0;
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glColor3d(0, 1, 0);
+  glColor3d(0, 1., 0);
 
   S.ZastosujAlgorytmy();
   S.InfoKonsolowe();
@@ -695,6 +697,11 @@ int main(int argc, char *argv[])
   int nrParametruFunkcjiMain = 1;
   int nrPrzekazanegoLancucha = 0;
   double ParametrDouble = 0;
+  
+  QApplication app(argc, argv);
+  KnotDisentangler2 knotdisentangler2;
+  knotdisentangler2.show();
+  return app.exec();
 
   if (argc != 2)
   {
@@ -746,7 +753,7 @@ int main(int argc, char *argv[])
   //MOJE:
   glutMouseFunc(Wybierz);
 
-  glClearColor(1, 1, 1, 1);
+  glClearColor(0.8, 0.8, 0.8, 1);
   glEnable(GL_CULL_FACE);
   glCullFace(GL_BACK);
 

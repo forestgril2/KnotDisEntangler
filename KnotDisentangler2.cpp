@@ -9,12 +9,13 @@
 KnotDisentangler2::KnotDisentangler2()
 {
   QAction* action = new QAction(this);
+  QSurface* surfaceGL = new QSurface(QSurface::OpenGLSurface); 
   action->setText("Quit");
   
   connect(action, SIGNAL(triggered()), SLOT(close()));
   menuBar()->addMenu("File")->addAction(action);
   
-  setWindowSurface(OpenGLSurface);
+  setWindowSurface(surfaceGL);
 }
 
 KnotDisentangler2::~KnotDisentangler2()
