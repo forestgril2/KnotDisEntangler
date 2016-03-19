@@ -1149,7 +1149,7 @@ void Knot3D::WybierzSegm(int Numer1)
     {
          SegmentyWybrane.usun(*it);
     }
- else    
+ else
     {
          SegmentyWybrane.wstaw(Numer);
     }; 

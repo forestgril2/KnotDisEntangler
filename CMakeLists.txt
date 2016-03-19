@@ -3,7 +3,7 @@ project(knotdisentangler2)
 
 set(CMAKE_AUTOMOC ON)
 
-set (CMAKE_PREFIX_PATH "/home/space/Projects/Programming/Qt5.5/5.5/gcc_64")
+set (CMAKE_PREFIX_PATH "/home/space/Projects/Programming/Qt5.6/5.6/gcc_64")
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Gui REQUIRED)

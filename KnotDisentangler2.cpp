@@ -6,10 +6,10 @@
 #include <QtGui/QAction>
 #include <QSurface>
 
-KnotDisentangler2::KnotDisentangler2()
+KnotDisentangler2::KnotDisentangler2(QScreen* screen) 
+: QMainWindow(screen), QOpenGLWidget(screen)
 {
   QAction* action = new QAction(this);
-  QSurface* surfaceGL = new QSurface(QSurface::OpenGLSurface); 
   action->setText("Quit");
   
   connect(action, SIGNAL(triggered()), SLOT(close()));
