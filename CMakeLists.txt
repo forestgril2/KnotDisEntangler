@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 2.8.11)
 project(knotdisentangler2)
 
 set(CMAKE_AUTOMOC ON)
-
-set (CMAKE_PREFIX_PATH "/home/space/Projects/Programming/Qt5.6/5.6/gcc_64")
+#set(QT_DIR "/home/space/Projects/Programming/Qt5.6/5.6/gcc_64")
+set (CMAKE_PREFIX_PATH "/home/space/Projects/Programming/Qt5.5/5.5/gcc_64")
+#set (CMAKE_PREFIX_PATH "/home/space/Qt5.6/gcc_64")
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -16,6 +17,6 @@ KnotSimData.cpp  KnotSimulator.cpp)
 
 add_executable(knotdisentangler2 ${KnotDisentangler2_SRCS})
 target_link_libraries(knotdisentangler2 ${QT_QTCORE_LIBRARY} 
-${QT_QTGUI_LIBRARY} Qt5::Gui GL GLU glut glui)
+${QT_QTGUI_LIBRARY} Qt5::Gui Qt5::Widgets GL GLU glut glui)
 
 install(TARGETS knotdisentangler2 RUNTIME DESTINATION bin)

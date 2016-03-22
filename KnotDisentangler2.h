@@ -2,16 +2,15 @@
 #define KnotDisentangler2_H
 
 #include <QtGui/QMainWindow>
-#include <QOpenGLFunctions>
+#include <QtGui/QOpenGLFunctions>
 #include <QtWidgets/QOpenGLWidget>
 
-class KnotDisentangler2 : public QMainWindow, public QOpenGLWidget, 
-protected QOpenGLFunctions
+class KnotDisentangler2 : public QOpenGLWidget, protected QOpenGLFunctions
 {
 Q_OBJECT
 
 public:
-  KnotDisentangler2(QScreen *screen = 0);
+  KnotDisentangler2(QWidget* parent = Q_NULLPTR);
   virtual ~KnotDisentangler2();
   
 protected:
