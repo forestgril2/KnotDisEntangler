@@ -1,6 +1,7 @@
 #ifndef KnotDisentangler2_H
 #define KnotDisentangler2_H
 
+#include <QWidget>
 #include <QtGui/QMainWindow>
 #include <QtGui/QOpenGLFunctions>
 #include <QtWidgets/QOpenGLWidget>
@@ -14,8 +15,8 @@ public:
   virtual ~KnotDisentangler2();
   
 protected:
-  void initializeGL();
-  void paintGL();
+  //void initializeGL();
+  //void paintGL();
   
   QOpenGLContext *m_context;
 };

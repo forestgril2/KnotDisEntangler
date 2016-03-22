@@ -6,12 +6,12 @@
 
 KnotDisentangler2::KnotDisentangler2(QWidget* parent) : QOpenGLWidget(parent)
 {
-  QMenuBar* menuBar();
-  QAction* action = new QAction(this);
-  action->setText("Quit");
+  //QMenuBar* menuBar;
+  //QAction* action = new QAction(this);
+  //action->setText("Quit");
   
-  connect(action, SIGNAL(triggered()), SLOT(close()));
-  menuBar()->addMenu("File")->addAction(action);
+  //connect(action, SIGNAL(triggered()), SLOT(close()));
+  //menuBar->addMenu("File")->addAction(action);
 }
 
 KnotDisentangler2::~KnotDisentangler2()

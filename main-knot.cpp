@@ -701,7 +701,7 @@ int main(int argc, char *argv[])
   QApplication app(argc, argv);
   KnotDisentangler2 knotdisentangler2;
   knotdisentangler2.show();
-  return app.exec();
+  //return app.exec();
 
   if (argc != 2)
   {
